@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base: #030712;
+  --color-surface: rgba(255, 255, 255, 0.04);
+  --color-primary: #00F5A0;
+  --color-secondary: #00D9FF;
+  --color-accent: #8B5CF6;
+  --color-warning: #F59E0B;
+  --color-danger: #FF4D6D;
+  --color-text-main: #F8FAFC;
+  --color-muted: #94A3B8;
+
+  /* Brand Colors used by Landing Page components */
+  --color-brand-emerald: #00F5A0;
+  --color-brand-cyan: #00D9FF;
+  --color-brand-purple: #8B5CF6;
+  --color-brand-danger: #FF4D6D;
+  --color-brand-warning: #F59E0B;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 4s ease-in-out infinite;
+  --animate-scan: scan 2s linear infinite;
+  --animate-blob: blob 10s infinite alternate;
+  --animate-shimmer: shimmer 2.5s infinite linear;
+}
+
+@layer base {
+  body {
+    margin: 0;
+    background-color: var(--color-base);
+    color: var(--color-text-main);
+    overflow-x: hidden;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Lenis smooth scrolling styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Advanced Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(200%); opacity: 0; }
+}
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(40px, -60px) scale(1.1); }
+  66% { transform: translate(-30px, 30px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* 🎨 Theme System: Glassmorphism & Surfaces */
+.glass-panel {
+  background: var(--color-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-panel-heavy {
+  background: rgba(3, 7, 18, 0.7);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 🌌 Backgrounds: Mesh, Aurora, Grid, Noise */
+.mesh-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(0, 245, 160, 0.05), transparent 30%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05), transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.03), transparent 50%);
+  pointer-events: none;
+}
+
+.noise-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.cyber-grid-bg {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+}
+
+.text-glow {
+  text-shadow: 0 0 25px rgba(0, 245, 160, 0.5);
+}
+
+.text-glow-accent {
+  text-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
+}
+
+/* 🪄 Micro-interactions */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 245, 160, 0.1);
+}
+
+/* Custom Scrollbar for Dashboard */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-base);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

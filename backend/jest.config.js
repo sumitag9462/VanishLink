@@ -1,0 +1,9 @@
+// backend/jest.config.js
+module.exports = {
+  testEnvironment: 'node',
+  setupFilesAfterEnv: ['./tests/setup.js'],
+  testMatch: ['**/tests/**/*.test.js'],
+  forceExit: true,
+  clearMocks: true,
+  restoreMocks: true
+};

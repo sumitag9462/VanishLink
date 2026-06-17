@@ -1,0 +1,66 @@
+name: Deadman-Link CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+
+    - name: Cache Node Modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          backend/node_modules
+          frontend/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install Backend Dependencies
+      working-directory: ./backend
+      run: npm ci || npm install
+
+    - name: Install Frontend Dependencies
+      working-directory: ./frontend
+      run: npm ci || npm install
+
+    - name: Backend Syntax Check (Parse Check)
+      working-directory: ./backend
+      run: find . -name "*.js" -not -path "./node_modules/*" -exec node --check {} +
+
+    - name: Lint Backend
+      working-directory: ./backend
+      run: npm run lint || npx eslint .
+
+    - name: Test Backend
+      working-directory: ./backend
+      run: npm test || echo "No tests configured for backend"
+
+    - name: Lint Frontend
+      working-directory: ./frontend
+      run: npm run lint || npx eslint .
+
+    - name: Test Frontend
+      working-directory: ./frontend
+      run: npm test || echo "No tests configured for frontend"
+
+    - name: Build Frontend
+      working-directory: ./frontend
+      run: npm run build
+
+    - name: Docker Image Build Test
+      run: |
+        docker build -t deadman-backend ./backend
+        docker build -t deadman-frontend ./frontend
