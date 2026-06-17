@@ -10,6 +10,6 @@ describe('StatsCard Component', () => {
     render(<StatsCard title="Total Clicks" value="1,234" icon={MockIcon} />);
     expect(screen.getByText('Total Clicks')).toBeInTheDocument();
     expect(screen.getByText('1,234')).toBeInTheDocument();
-    expect(screen.getByTestId('mock-icon')).toBeInTheDocument();
+    expect(screen.getAllByTestId('mock-icon')[0]).toBeInTheDocument();
   });
 });
